@@ -21,10 +21,6 @@ class CKEditor5Classic extends Trix
     public function __construct(string $name, $attribute = null, ?callable $resolveCallback = null)
     {
         parent::__construct($name, $attribute, $resolveCallback);
-
-        $this->withMeta([
-            'draftId' => Str::uuid()
-        ]);
     }
 
     /**

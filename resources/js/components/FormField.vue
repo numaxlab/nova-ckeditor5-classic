@@ -37,7 +37,8 @@ export default {
             defaultEditorConfig: {
                 nova: {
                     resourceName: this.resourceName,
-                    field: this.field
+                    field: this.field,
+                    draftId: uuidv4()
                 },
                 heading: {
                     options: [
@@ -55,6 +56,9 @@ export default {
     },
 
     computed: {
+        draftId: function () {
+            return this.defaultEditorConfig.nova.draftId
+        },
         editorConfig: function() {
             let editorConfig = this.defaultEditorConfig
 
@@ -116,7 +120,7 @@ export default {
             let novaConfig = editor.config.get('nova')
 
             editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-                return new NovaCKEditor5UploadAdapter(loader, novaConfig.resourceName, novaConfig.field)
+                return new NovaCKEditor5UploadAdapter(loader, novaConfig.resourceName, novaConfig.field, novaConfig.draftId)
             }
         },
 
@@ -127,7 +131,7 @@ export default {
             if (this.field.withFiles) {
                 Nova.request()
                     .delete(
-                        `/nova-vendor/ckeditor5-classic/${this.resourceName}/attachments/${this.field.attribute}/${this.field.draftId}`
+                        `/nova-vendor/ckeditor5-classic/${this.resourceName}/attachments/${this.field.attribute}/${this.draftId}`
                     )
                     .then(response => console.log(response))
                     .catch(error => {})
@@ -135,5 +139,11 @@ export default {
         }
 
     }
+}
+
+function uuidv4() {
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+        (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
+    )
 }
 </script>

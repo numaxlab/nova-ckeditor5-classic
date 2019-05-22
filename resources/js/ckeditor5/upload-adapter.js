@@ -1,8 +1,9 @@
 export default class NovaCKEditor5UploadAdapter {
-    constructor(loader, resourceName, field) {
+    constructor(loader, resourceName, field, draftId) {
         this.loader = loader
         this.resourceName = resourceName
         this.field = field
+        this.draftId = draftId
     }
 
     upload() {
@@ -11,7 +12,7 @@ export default class NovaCKEditor5UploadAdapter {
                 const data = new FormData()
                 data.append('Content-Type', file.type)
                 data.append('attachment', file)
-                data.append('draftId', this.field.draftId)
+                data.append('draftId', this.draftId)
 
                 return Nova.request()
                     .post(`/nova-vendor/ckeditor5-classic/${this.resourceName}/upload/${this.field.attribute}`, data, {
