@@ -1,0 +1,139 @@
+<template>
+    <default-field :field="field" :errors="errors" :full-width-content="true">
+        <template slot="field">
+            <div class="rounded-lg">
+                <ckeditor
+                    :editor="editor"
+                    :config="editorConfig"
+                    :id="field.name"
+                    :class="errorClasses"
+                    :placeholder="field.name"
+                    v-model="value"
+                    @ready="setEditorInitialValue"
+                />
+            </div>
+        </template>
+    </default-field>
+</template>
+
+<script>
+import { FormField, HandlesValidationErrors } from 'laravel-nova'
+import CKEditor from '@ckeditor/ckeditor5-vue'
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import NovaCKEditor5UploadAdapter from '../ckeditor5/upload-adapter'
+
+export default {
+    mixins: [FormField, HandlesValidationErrors],
+
+    components: {
+        ckeditor: CKEditor.component
+    },
+
+    props: ['resourceName', 'resourceId', 'field'],
+
+    data () {
+        return {
+            editor: ClassicEditor,
+            defaultEditorConfig: {
+                nova: {
+                    resourceName: this.resourceName,
+                    field: this.field
+                },
+                heading: {
+                    options: [
+                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                        { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' }
+                    ]
+                },
+                extraPlugins: [
+                    this.createUploadAdapterPlugin
+                ]
+            }
+        }
+    },
+
+    computed: {
+        editorConfig: function() {
+            let editorConfig = this.defaultEditorConfig
+
+            if (! editorConfig.nova.field.withFiles) {
+                editorConfig.removePlugins = [
+                    'Image',
+                    'ImageToolbar',
+                    'ImageCaption',
+                    'ImageStyle',
+                    'ImageTextAlternate',
+                    'ImageUpload'
+                ]
+                editorConfig.image = {}
+                editorConfig.extraPlugins = []
+            }
+
+            return editorConfig
+        }
+    },
+
+    beforeDestroy() {
+        this.cleanUp()
+    },
+
+    methods: {
+        /**
+         * Set the initial, internal value for the field.
+         */
+        setInitialValue() {
+            //
+        },
+
+        /**
+         * Set the editor initial, internal value for the field when the editor is ready.
+         */
+        setEditorInitialValue(editor) {
+            this.value = this.field.value || ''
+        },
+
+        /**
+         * Fill the given FormData object with the field's internal value.
+         */
+        fill(formData) {
+            formData.append(this.field.attribute, this.value || '')
+            formData.append(this.field.attribute + 'DraftId', this.field.draftId);
+        },
+
+        /**
+         * Update the field's internal value.
+         */
+        handleChange(value) {
+            this.value = value
+        },
+
+        /**
+        * Create CKEditor upload adapter plugin.
+        */
+        createUploadAdapterPlugin(editor) {
+            let novaConfig = editor.config.get('nova')
+
+            editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                return new NovaCKEditor5UploadAdapter(loader, novaConfig.resourceName, novaConfig.field)
+            }
+        },
+
+        /**
+         * Purge pending attachments for the draft
+         */
+        cleanUp() {
+            if (this.field.withFiles) {
+                Nova.request()
+                    .delete(
+                        `/nova-vendor/ckeditor5-classic/${this.resourceName}/attachments/${this.field.attribute}/${this.field.draftId}`
+                    )
+                    .then(response => console.log(response))
+                    .catch(error => {})
+            }
+        }
+
+    }
+}
+</script>
