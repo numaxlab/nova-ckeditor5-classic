@@ -2,12 +2,11 @@
 
 namespace NumaxLab\NovaCKEditor5Classic;
 
-use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use NumaxLab\NovaCKEditor5Classic\Handlers\DiscardPendingAttachments;
 use NumaxLab\NovaCKEditor5Classic\Handlers\StorePendingAttachment;
-use NumaxLab\NovaCKEditor5Classic\Models\PendingAttachment as CKEditorPendingAttachment;
+use NumaxLab\NovaCKEditor5Classic\Models\PendingAttachment;
 
 class CKEditor5Classic extends Trix
 {
@@ -69,10 +68,8 @@ class CKEditor5Classic extends Trix
         );
 
         if ($request->{$this->attribute.'DraftId'} && $this->withFiles) {
-            $pendingAttachmentClass = CKEditorPendingAttachment::class;
-
-            return function () use ($request, $requestAttribute, $model, $attribute, $pendingAttachmentClass) {
-                $pendingAttachmentClass::persistDraft(
+            return function () use ($request, $requestAttribute, $model, $attribute) {
+                PendingAttachment::persistDraft(
                     $request->{$this->attribute.'DraftId'},
                     $this,
                     $model
