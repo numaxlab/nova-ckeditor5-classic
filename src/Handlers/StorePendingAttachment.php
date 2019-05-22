@@ -4,12 +4,16 @@ namespace NumaxLab\NovaCKEditor5Classic\Handlers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use NumaxLab\NovaCKEditor5Classic\CKEditor5Classic;
 use NumaxLab\NovaCKEditor5Classic\Models\PendingAttachment;
 
 class StorePendingAttachment
 {
+    public const STORAGE_PATH = '/attachments';
+
     /**
      * The field instance.
      *
@@ -35,13 +39,15 @@ class StorePendingAttachment
      */
     public function __invoke(Request $request)
     {
-        $this->abortIfFileNameExists($request);
+        $filename = $this->generateFilename($request->attachment);
+
+        $this->abortIfFileNameExists($filename);
 
         $attachment = PendingAttachment::create([
             'draft_id' => $request->draftId,
             'attachment' => $request->attachment->storeAs(
-                '/',
-                $request->attachment->getClientOriginalName(),
+                self::STORAGE_PATH,
+                $filename,
                 $this->field->disk
             ),
             'disk' => $this->field->disk,
@@ -51,15 +57,26 @@ class StorePendingAttachment
     }
 
     /**
-     * @param Request $request
+     * @param string $filename
      */
-    protected function abortIfFileNameExists(Request $request): void
+    protected function abortIfFileNameExists($filename): void
     {
-        if (Storage::disk($this->field->disk)->exists($request->attachment->getClientOriginalName())) {
+        if (Storage::disk($this->field->disk)->exists(self::STORAGE_PATH.'/'.$filename)) {
             abort(response()->json([
                 'status' => Response::HTTP_CONFLICT,
                 'message' => 'A file with this name already exists on the server'
             ], Response::HTTP_CONFLICT));
         }
+    }
+
+    /**
+     * @param UploadedFile $uploadedFile
+     * @return string
+     */
+    protected function generateFilename(UploadedFile $uploadedFile)
+    {
+        $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+        return Str::slug($originalFilename).'-'.uniqid('', false).'.'.$uploadedFile->guessExtension();
     }
 }
