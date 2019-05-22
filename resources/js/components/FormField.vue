@@ -103,7 +103,7 @@ export default {
          */
         fill(formData) {
             formData.append(this.field.attribute, this.value || '')
-            formData.append(this.field.attribute + 'DraftId', this.field.draftId);
+            formData.append(this.field.attribute + 'DraftId', this.draftId);
         },
 
         /**
