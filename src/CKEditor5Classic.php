@@ -50,25 +50,10 @@ class CKEditor5Classic extends Trix
      */
     protected function fillAttribute(NovaRequest $request, $requestAttribute, $model, $attribute)
     {
-        if (isset($this->fillCallback)) {
-            return call_user_func(
-                $this->fillCallback,
-                $request,
-                $model,
-                $attribute,
-                $requestAttribute
-            );
-        }
-
-        $this->fillAttributeFromRequest(
-            $request,
-            $requestAttribute,
-            $model,
-            $attribute
-        );
+        parent::fillAttribute($request, $requestAttribute, $model, $attribute);
 
         if ($request->{$this->attribute.'DraftId'} && $this->withFiles) {
-            return function () use ($request, $requestAttribute, $model, $attribute) {
+            return function () use ($request, $model, $attribute) {
                 PendingAttachment::persistDraft(
                     $request->{$this->attribute.'DraftId'},
                     $this,
