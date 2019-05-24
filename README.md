@@ -2,6 +2,9 @@
 
 [CKEditor5 Classic editor](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/overview.html#classic-editor) field for Laravel Nova. Use the last version of the popular WYSIWYG editor as a [Laravel Nova](https://nova.laravel.com/) field.
 
+<a href="https://packagist.org/packages/numaxlab/nova-ckeditor5-classic"><img src="https://img.shields.io/packagist/v/numaxlab/nova-ckeditor5-classic.svg?style=flat-square" alt="Latest Version on Packagist"></img></a>
+<a href="https://packagist.org/packages/numaxlab/nova-ckeditor5-classic"><img src="https://img.shields.io/packagist/dt/numaxlab/nova-ckeditor5-classic.svg?style=flat-square" alt="Total Downloads"></a>
+
 ## Installation
 
 You can install the package into a Laravel application that uses Nova via composer:
