@@ -28,15 +28,7 @@ class CKEditor5Classic extends Trix
      */
     public function withFiles($disk = null)
     {
-        $this->withFiles = true;
-
-        $this->disk($disk);
-
-        $this->attach(new StorePendingAttachment($this))
-            ->discard(new DiscardPendingAttachments())
-            ->prunable();
-
-        return $this;
+        return parent::withFiles($disk);
     }
 
     /**
