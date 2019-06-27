@@ -6,41 +6,47 @@ return [
     |--------------------------------------------------------------------------------
     |
     | To view a list of all available options checkout the CKEditor API documentation
-    | https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html
+    | https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/configuration.html
     |
     */
-    /*    
-        'options' => [
-            'toolbar' => [
-                ['Source', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Print', 'SpellChecker', 'Scayt'],
-                ['Undo', 'Redo', '-', 'Find', 'Replace', '-', 'SelectAll', 'RemoveFormat'],
-                ['Image', 'Table', 'HorizontalRule', 'SpecialChar', 'PageBreak'],
-                '/',
-                ['Bold', 'Italic', 'Strike', '-', 'Subscript', 'Superscript'],
-                ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', 'Blockquote', 'CreateDiv'],
-                ['JustifyLeft', 'JustifyCenter', 'JustifyRight'],
-                ['Link', 'Unlink', 'Anchor'],
-                '/',
-                ['Format', 'FontSize'],
-                ['Maximize', 'ShowBlocks', '-', 'About']
+    'options' => [
+        'language' => 'de',
+        'toolbar' => [
+            'Heading', 
+            'Bold', 
+            'Italic', 
+            '-', 
+            'Link', 
+            '-', 
+            'NumberedList', 
+            'BulletedList', 
+            'BlockQuote', 
+            '-', 
+            'MediaEmbed',
+            'imageUpload',
+        ],
+        'image' => [
+            'toolbar' => [ 
+                'imageTextAlternative', '|', 
+                'imageStyle:alignLeft', 
+                'imageStyle:full', 
+                'imageStyle:alignRight' 
+            ],
+            'styles' => [
+                // This option is equal to a situation where no style is applied.
+                'full',
+                // This represents an image aligned to the left.
+                'alignLeft',
+                // This represents an image aligned to the right.
+                'alignRight',
             ]
         ],
-    */
-    /*
-    'options' => [
-        'language' => 'de',
-        'toolbar' => [
-            ['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', 'Blockquote'],
-            ['Image', '-', 'Table', '-', 'PasteText', 'RemoveFormat', 'Source', 'ShowBlocks', 'Maximize'],
-            ['Link', 'Unlink'],
-            ['Format'],
-        ]
-    ],
-    */
-    'options' => [
-        'language' => 'de',
-        'toolbar' => [
-            ['Bold', 'Italic']
+        'heading' => [
+            'options'=> [
+                [ 'model'=> 'paragraph', 'title'=> 'Paragraph', 'class'=> 'ck-heading_paragraph'] ,
+                [ 'model'=> 'heading2', 'view'=> 'h2', 'title'=> 'Heading 2', 'class'=> 'ck-heading_heading2' ],
+                [ 'model'=> 'heading3', 'view'=> 'h3', 'title'=> 'Heading 3', 'class'=> 'ck-heading_heading3' ]
+            ],
         ],
     ],
 ];
