@@ -57,7 +57,14 @@ use NumaxLab\NovaCKEditor5Classic\CKEditor5Classic;
 CKEditor5Classic::make('Content')->withFiles('public');
 ```
 
-If you want to change the Editor's settings, you can do so 
+If you want to change the Editor's settings, you can do so by editing the (published) config in 
+`./config/ckeditor5Classic.php`
+or by setting it directly, if you need different setups perhaps:
+```
+CKEditor5Classic::make('Content')->withFiles('public')
+->options([...])
+;
+```
 
 And also, in your `app/Console/Kernel.php` file, you should register a [daily job](https://laravel.com/docs/5.7/scheduling) to prune any stale attachments from the pending attachments table and storage:
 
