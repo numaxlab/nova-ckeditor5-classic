@@ -32,6 +32,10 @@ class FieldServiceProvider extends ServiceProvider
                 __DIR__.'/../database/migrations/create_ckeditor_attachment_tables.php.stub' => database_path('migrations/'.$timestamp.'_create_ckeditor_attachment_tables.php'),
             ], 'migrations');
         }
+
+        $this->publishes([
+            __DIR__ . '/../config/ckeditor5Classic.php' => config_path('ckeditor5Classic.php'),
+        ], 'config');
     }
 
     /**
