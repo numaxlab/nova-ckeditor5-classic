@@ -45,6 +45,7 @@ To use this attachments driver, publish and run the migration:
 
 ```bash
 php artisan vendor:publish --tag=migrations --provider=NumaxLab\\NovaCKEditor5Classic\\\FieldServiceProvider 
+php artisan vendor:publish --tag=config --provider=NumaxLab\\NovaCKEditor5Classic\\FieldServiceProvider
 php artisan migrate
 ```
 
@@ -55,6 +56,8 @@ use NumaxLab\NovaCKEditor5Classic\CKEditor5Classic;
 
 CKEditor5Classic::make('Content')->withFiles('public');
 ```
+
+If you want to change the Editor's settings, you can do so 
 
 And also, in your `app/Console/Kernel.php` file, you should register a [daily job](https://laravel.com/docs/5.7/scheduling) to prune any stale attachments from the pending attachments table and storage:
 
