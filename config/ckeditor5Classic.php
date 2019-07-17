@@ -1,5 +1,6 @@
 <?php
 return [
+
     /*
     |--------------------------------------------------------------------------------
     | CKEditor Options
@@ -9,28 +10,29 @@ return [
     | https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/configuration.html
     |
     */
+
     'options' => [
-        'language' => 'de',
+        'language' => 'en',
         'toolbar' => [
-            'Heading', 
-            'Bold', 
-            'Italic', 
-            '-', 
-            'Link', 
-            '-', 
-            'NumberedList', 
-            'BulletedList', 
-            'BlockQuote', 
-            '-', 
+            'Heading',
+            'Bold',
+            'Italic',
+            '-',
+            'Link',
+            '-',
+            'NumberedList',
+            'BulletedList',
+            'BlockQuote',
+            '-',
             'MediaEmbed',
             'imageUpload',
         ],
         'image' => [
-            'toolbar' => [ 
-                'imageTextAlternative', '|', 
-                'imageStyle:alignLeft', 
-                'imageStyle:full', 
-                'imageStyle:alignRight' 
+            'toolbar' => [
+                'imageTextAlternative', '|',
+                'imageStyle:alignLeft',
+                'imageStyle:full',
+                'imageStyle:alignRight'
             ],
             'styles' => [
                 // This option is equal to a situation where no style is applied.
@@ -48,5 +50,6 @@ return [
                 [ 'model'=> 'heading3', 'view'=> 'h3', 'title'=> 'Heading 3', 'class'=> 'ck-heading_heading3' ]
             ],
         ],
-    ],
+    ]
+
 ];

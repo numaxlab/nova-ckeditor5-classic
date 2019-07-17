@@ -32,7 +32,6 @@ export default {
     props: ['resourceName', 'resourceId', 'field'],
 
     data () {
-        // console.log(ClassicEditor.builtinPlugins.map( plugin => plugin.pluginName ) );
         return {
             editor: ClassicEditor,
             defaultEditorConfig: {
@@ -41,7 +40,7 @@ export default {
                     field: this.field,
                     draftId: uuidv4()
                 },
-                language: 'de',
+                language: 'en',
                 toolbar: this.field.options.toolbar,
                 heading: this.field.options.heading,
                 image: this.field.options.image,
@@ -87,7 +86,6 @@ export default {
          */
         setInitialValue() {
             //
-            console.log(this.field.options);
         },
 
         /**
