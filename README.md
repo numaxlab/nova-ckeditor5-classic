@@ -13,6 +13,12 @@ You can install the package into a Laravel application that uses Nova via compos
 composer require numaxlab/nova-ckeditor5-classic
 ```
 
+After installing publish the config:
+
+```bash
+php artisan vendor:publish --tag=config --provider=NumaxLab\\NovaCKEditor5Classic\\FieldServiceProvider
+```
+
 ## Usage
 
 Use the `NumaxLab\NovaCKEditor5Classic\CKEditor5Classic` field in your Nova resource:
@@ -40,6 +46,18 @@ class Post extends Resource
 }
 ```
 
+## Customizing CKEditor
+
+If you want to change the Editor's settings, you can do so by editing the config file 
+`config/ckeditor5Classic.php` or by setting it directly in your filed, if you need different setup per field:
+
+```
+CKEditor5Classic::make('Content')->withFiles('public')
+->options([...]);
+```
+
+You can visit the CKEditor [configuration reference](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/configuration.html) to check the available options.
+
 ## Image uploads
 
 This Nova field provides native attachments driver which works similar to [Trix File Uploads](https://nova.laravel.com/docs/1.0/resources/fields.html#file-uploads).
@@ -48,7 +66,6 @@ To use this attachments driver, publish and run the migration:
 
 ```bash
 php artisan vendor:publish --tag=migrations --provider=NumaxLab\\NovaCKEditor5Classic\\\FieldServiceProvider 
-php artisan vendor:publish --tag=config --provider=NumaxLab\\NovaCKEditor5Classic\\FieldServiceProvider
 php artisan migrate
 ```
 
@@ -58,15 +75,6 @@ Then, allow users to upload images, just like with Trix field, chaining the `wit
 use NumaxLab\NovaCKEditor5Classic\CKEditor5Classic;
 
 CKEditor5Classic::make('Content')->withFiles('public');
-```
-
-If you want to change the Editor's settings, you can do so by editing the (published) config in 
-`./config/ckeditor5Classic.php`
-or by setting it directly, if you need different setups perhaps:
-```
-CKEditor5Classic::make('Content')->withFiles('public')
-->options([...])
-;
 ```
 
 And also, in your `app/Console/Kernel.php` file, you should register a [daily job](https://laravel.com/docs/5.7/scheduling) to prune any stale attachments from the pending attachments table and storage:
