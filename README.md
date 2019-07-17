@@ -2,9 +2,6 @@
 
 [CKEditor5 Classic editor](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/overview.html#classic-editor) field for Laravel Nova. Use the last version of the popular WYSIWYG editor as a [Laravel Nova](https://nova.laravel.com/) field.
 
-<a href="https://packagist.org/packages/numaxlab/nova-ckeditor5-classic"><img src="https://img.shields.io/packagist/v/numaxlab/nova-ckeditor5-classic.svg?style=flat-square" alt="Latest Version on Packagist"></img></a>
-<a href="https://packagist.org/packages/numaxlab/nova-ckeditor5-classic"><img src="https://img.shields.io/packagist/dt/numaxlab/nova-ckeditor5-classic.svg?style=flat-square" alt="Total Downloads"></a>
-
 ## Installation
 
 You can install the package into a Laravel application that uses Nova via composer:
@@ -48,6 +45,7 @@ To use this attachments driver, publish and run the migration:
 
 ```bash
 php artisan vendor:publish --tag=migrations --provider=NumaxLab\\NovaCKEditor5Classic\\\FieldServiceProvider 
+php artisan vendor:publish --tag=config --provider=NumaxLab\\NovaCKEditor5Classic\\FieldServiceProvider
 php artisan migrate
 ```
 
@@ -57,6 +55,15 @@ Then, allow users to upload images, just like with Trix field, chaining the `wit
 use NumaxLab\NovaCKEditor5Classic\CKEditor5Classic;
 
 CKEditor5Classic::make('Content')->withFiles('public');
+```
+
+If you want to change the Editor's settings, you can do so by editing the (published) config in 
+`./config/ckeditor5Classic.php`
+or by setting it directly, if you need different setups perhaps:
+```
+CKEditor5Classic::make('Content')->withFiles('public')
+->options([...])
+;
 ```
 
 And also, in your `app/Console/Kernel.php` file, you should register a [daily job](https://laravel.com/docs/5.7/scheduling) to prune any stale attachments from the pending attachments table and storage:

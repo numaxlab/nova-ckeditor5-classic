@@ -20,8 +20,24 @@ class CKEditor5Classic extends Trix
     public function __construct(string $name, $attribute = null, ?callable $resolveCallback = null)
     {
         parent::__construct($name, $attribute, $resolveCallback);
+        $this->withMeta([
+            'options' => config('ckeditor5Classic.options', [])
+        ]);
     }
+    /**
+     * Set configuration options for the CKEditor editor instance.
+     *
+     * @param  array $options
+     * @return $this
+     */
+    public function options($options)
+    {
+        $currentOptions = $this->meta['options'] ?? [];
 
+        return $this->withMeta([
+            'options' => array_merge($currentOptions, $options),
+        ]);
+    }
     /**
      * @param null $disk
      * @return $this
