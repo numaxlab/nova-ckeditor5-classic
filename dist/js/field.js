@@ -10903,7 +10903,7 @@ var render = function() {
       _c("template", { slot: "field" }, [
         _c(
           "div",
-          { staticClass: "rounded-lg", staticStyle: { "min-height": "200px" } },
+          { staticClass: "rounded-lg" },
           [
             _c("ckeditor", {
               class: _vm.errorClasses,
