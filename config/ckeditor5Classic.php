@@ -14,18 +14,30 @@ return [
     'options' => [
         'language' => 'en',
         'toolbar' => [
+            'Undo',
+            'Redo',
+            '|',
             'Heading',
+            '|',
             'Bold',
             'Italic',
-            '-',
+            '|',
             'Link',
-            '-',
+            '|',
             'NumberedList',
             'BulletedList',
             'BlockQuote',
-            '-',
+            '|',
             'MediaEmbed',
             'imageUpload',
+            '|',
+            'insertTable',
+            '|',
+            'alignment:left',
+            'alignment:center',
+            'alignment:right',
+            'alignment:justify',
+            '|'
         ],
         'image' => [
             'toolbar' => [
