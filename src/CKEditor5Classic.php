@@ -39,7 +39,7 @@ class CKEditor5Classic extends Trix
         ]);
     }
     /**
-     * @param null $disk
+     * @param string|null $disk
      * @return $this
      */
     public function withFiles($disk = null)
