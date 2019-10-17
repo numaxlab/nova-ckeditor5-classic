@@ -1,7 +1,7 @@
 <template>
     <default-field :field="field" :errors="errors" :full-width-content="true">
         <template slot="field">
-            <div class="rounded-lg">
+            <div class="rounded-lg form-control auto-height">
                 <ckeditor
                     :editor="editor"
                     :config="editorConfig"
