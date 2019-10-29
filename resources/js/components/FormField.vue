@@ -47,7 +47,8 @@ export default {
                 fontFamily: this.field.options.fontFamily,
                 extraPlugins: [
                     this.createUploadAdapterPlugin
-                ]
+                ],
+                link: this.field.options.link
             }
         }
     },
