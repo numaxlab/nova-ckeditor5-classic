@@ -1,7 +1,7 @@
 <template>
     <default-field :field="field" :errors="errors" :full-width-content="true">
         <template slot="field">
-            <div class="rounded-lg">
+            <div class="rounded-lg" :class="containerClass">
                 <ckeditor
                     :editor="editor"
                     :config="editorConfig"
@@ -33,6 +33,7 @@ export default {
 
     data () {
         return {
+            containerClass: this.field.options.containerClass ? this.field.options.containerClass : '',
             editor: ClassicEditor,
             defaultEditorConfig: {
                 nova: {
