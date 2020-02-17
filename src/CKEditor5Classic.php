@@ -7,6 +7,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use NumaxLab\NovaCKEditor5Classic\Handlers\DiscardPendingAttachments;
 use NumaxLab\NovaCKEditor5Classic\Handlers\StorePendingAttachment;
 use NumaxLab\NovaCKEditor5Classic\Models\PendingAttachment;
+use NumaxLab\NovaCKEditor5Classic\Models\DeleteAttachments;
+use NumaxLab\NovaCKEditor5Classic\Models\DetachAttachment;
 
 class CKEditor5Classic extends Trix
 {
@@ -49,6 +51,8 @@ class CKEditor5Classic extends Trix
         $this->disk($disk);
 
         $this->attach(new StorePendingAttachment($this))
+            ->detach(new DetachAttachment($this))
+            ->delete(new DeleteAttachments($this))
             ->discard(new DiscardPendingAttachments())
             ->prunable();
 
