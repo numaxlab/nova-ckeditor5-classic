@@ -15,7 +15,7 @@ class DiscardPendingAttachments
      */
     public function __invoke(Request $request)
     {
-        PendingAttachment::where('draft_id', $request->draftId)
+        config('ckeditor5Classic.pending_attachment_model')::where('draft_id', $request->draftId)
             ->get()
             ->each
             ->purge();

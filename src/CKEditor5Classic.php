@@ -74,7 +74,7 @@ class CKEditor5Classic extends Trix
 
         if ($request->{$this->attribute.'DraftId'} && $this->withFiles) {
             return function () use ($request, $model, $attribute) {
-                PendingAttachment::persistDraft(
+                config('ckeditor5Classic.pending_attachment_model')::persistDraft(
                     $request->{$this->attribute.'DraftId'},
                     $this,
                     $model

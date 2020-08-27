@@ -14,7 +14,7 @@ class DetachAttachment
      */
     public function __invoke(Request $request)
     {
-        Attachment::where('url', $request->attachmentUrl)
+        config('ckeditor5Classic.attachment_model')::where('url', $request->attachmentUrl)
                         ->get()
                         ->each
                         ->purge();

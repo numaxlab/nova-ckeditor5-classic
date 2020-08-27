@@ -33,7 +33,7 @@ class DeleteAttachments
      */
     public function __invoke(Request $request, $model)
     {
-        Attachment::where('attachable_type', get_class($model))
+        config('ckeditor5Classic.attachment_model')::where('attachable_type', get_class($model))
                 ->where('attachable_id', $model->getKey())
                 ->get()
                 ->each
