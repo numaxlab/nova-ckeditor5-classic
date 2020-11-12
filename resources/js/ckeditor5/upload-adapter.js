@@ -14,10 +14,12 @@ export default class NovaCKEditor5UploadAdapter {
                 data.append('attachment', file)
                 data.append('draftId', this.draftId)
 
+                const fieldName = this.field.attribute.split('.');
+
                 return Nova.request()
-                    .post(`/nova-vendor/ckeditor5-classic/${this.resourceName}/upload/${this.field.attribute}`, data, {
+                    .post(`/nova-vendor/ckeditor5-classic/${this.resourceName}/upload/${fieldName[0]}`, data, {
                         headers: {
-                        'Content-Type': 'multipart/form-data'
+                            'Content-Type': 'multipart/form-data'
                         }
                     })
                     .then(response => {
