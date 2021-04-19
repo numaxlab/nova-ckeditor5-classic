@@ -145,6 +145,15 @@ export default {
             if (!mediaEmbedConfig) {
                 return {};
             }
+            if (mediaEmbedConfig.providers) {
+                mediaEmbedConfig.providers = mediaEmbedConfig.providers.map(embed => ({
+                    name: embed.name,
+                    url: new RegExp(removeRegexDelimiters(embed.url)),
+                    html: embed.html
+                        ? (match) => replaceMatches(embed.html, match)
+                        : undefined
+                }));
+            }
             if (mediaEmbedConfig.extraProviders) {
                 mediaEmbedConfig.extraProviders = mediaEmbedConfig.extraProviders.map(embed => ({
                     name: embed.name,
