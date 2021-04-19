@@ -48,7 +48,8 @@ export default {
                 extraPlugins: [
                     this.createUploadAdapterPlugin
                 ],
-                link: this.field.options.link
+                link: this.field.options.link,
+                mediaEmbed: this.getMediaEmbedConfiguration()
             }
         }
     },
@@ -134,6 +135,26 @@ export default {
                     .then(response => console.log(response))
                     .catch(error => {})
             }
+        },
+
+        /**
+         * Parse mediaEmbed options from the Laravel config.
+         */
+        getMediaEmbedConfiguration() {
+            const mediaEmbedConfig = this.field.options.mediaEmbed;
+            if (!mediaEmbedConfig) {
+                return {};
+            }
+            if (mediaEmbedConfig.extraProviders) {
+                mediaEmbedConfig.extraProviders = mediaEmbedConfig.extraProviders.map(embed => ({
+                    name: embed.name,
+                    url: new RegExp(removeRegexDelimiters(embed.url)),
+                    html: embed.html
+                        ? (match) => replaceMatches(embed.html, match)
+                        : undefined
+                }));
+            }
+            return mediaEmbedConfig;
         }
 
     }
@@ -144,4 +165,23 @@ function uuidv4() {
         (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
     )
 }
+
+/**
+ * Remove delimiters from regex coming from the server, since we want to pass
+ * this to a RegExp object.
+ */
+function removeRegexDelimiters(pattern) {
+    return pattern.startsWith('/') && pattern.endsWith('/')
+        ? pattern.substr(1, pattern.length-2)
+        : pattern;
+}
+
+/**
+ * Replace matches with corresponding placeholders in the given HTML string.
+ */
+function replaceMatches(string, matches) {
+    matches.forEach((match, key) => string = string.replace('$' + key, match));
+    return string;
+}
 </script>
+
