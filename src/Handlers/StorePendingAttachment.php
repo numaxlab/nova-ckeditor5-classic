@@ -12,8 +12,6 @@ use NumaxLab\NovaCKEditor5Classic\Models\PendingAttachment;
 
 class StorePendingAttachment
 {
-    public const STORAGE_PATH = '/attachments';
-
     /**
      * The field instance.
      *
@@ -46,7 +44,7 @@ class StorePendingAttachment
         $attachment = config('ckeditor5Classic.pending_attachment_model')::create([
             'draft_id' => $request->draftId,
             'attachment' => $request->attachment->storeAs(
-                self::STORAGE_PATH,
+                $this->field->storagePath,
                 $filename,
                 $this->field->disk
             ),
@@ -61,7 +59,7 @@ class StorePendingAttachment
      */
     protected function abortIfFileNameExists($filename): void
     {
-        if (Storage::disk($this->field->disk)->exists(self::STORAGE_PATH.'/'.$filename)) {
+        if (Storage::disk($this->field->disk)->exists(rtrim($this->field->storagePath, '/').'/'.$filename)) {
             abort(response()->json([
                 'status' => Response::HTTP_CONFLICT,
                 'message' => 'A file with this name already exists on the server'
