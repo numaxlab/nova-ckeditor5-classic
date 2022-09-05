@@ -7,6 +7,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use NumaxLab\NovaCKEditor5Classic\Handlers\DiscardPendingAttachments;
 use NumaxLab\NovaCKEditor5Classic\Handlers\StorePendingAttachment;
 use NumaxLab\NovaCKEditor5Classic\Models\PendingAttachment;
+use NumaxLab\NovaCKEditor5Classic\Models\DeleteAttachments;
+use NumaxLab\NovaCKEditor5Classic\Models\DetachAttachment;
 
 class CKEditor5Classic extends Trix
 {
@@ -39,16 +41,20 @@ class CKEditor5Classic extends Trix
         ]);
     }
     /**
-     * @param null $disk
+     * @param string|null $disk
      * @return $this
      */
-    public function withFiles($disk = null, $path = "/")
+
+    public function withFiles($disk = null, $path = '/')
+
     {
         $this->withFiles = true;
 
         $this->disk($disk);
 
         $this->attach(new StorePendingAttachment($this))
+            ->detach(new DetachAttachment($this))
+            ->delete(new DeleteAttachments($this))
             ->discard(new DiscardPendingAttachments())
             ->prunable();
 
@@ -70,7 +76,7 @@ class CKEditor5Classic extends Trix
 
         if ($request->{$this->attribute.'DraftId'} && $this->withFiles) {
             return function () use ($request, $model, $attribute) {
-                PendingAttachment::persistDraft(
+                config('ckeditor5Classic.pending_attachment_model')::persistDraft(
                     $request->{$this->attribute.'DraftId'},
                     $this,
                     $model

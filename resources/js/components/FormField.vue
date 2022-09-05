@@ -1,7 +1,11 @@
 <template>
     <default-field :field="field" :errors="errors" :full-width-content="true">
         <template slot="field">
-            <div class="rounded-lg" :class="containerClass">
+
+            <div class="rounded-lg form-control auto-height" :class="containerClass">
+
+        
+
                 <ckeditor
                     :editor="editor"
                     :config="editorConfig"
@@ -48,7 +52,8 @@ export default {
                 fontFamily: this.field.options.fontFamily,
                 extraPlugins: [
                     this.createUploadAdapterPlugin
-                ]
+                ],
+                link: this.field.options.link
             }
         }
     },

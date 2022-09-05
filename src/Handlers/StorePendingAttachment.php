@@ -43,7 +43,7 @@ class StorePendingAttachment
 
         $this->abortIfFileNameExists($filename);
 
-        $attachment = PendingAttachment::create([
+        $attachment = config('ckeditor5Classic.pending_attachment_model')::create([
             'draft_id' => $request->draftId,
             'attachment' => $request->attachment->storeAs(
                 self::STORAGE_PATH,

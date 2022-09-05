@@ -3,6 +3,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------------
+    | CKEditor Model
+    |--------------------------------------------------------------------------------
+    |
+    | The fully qualified class name of models.
+    |
+    */
+
+    'attachment_model' => \NumaxLab\NovaCKEditor5Classic\Models\Attachment::class,
+    'pending_attachment_model' => \NumaxLab\NovaCKEditor5Classic\Models\PendingAttachment::class,
+
+    /*
+    |--------------------------------------------------------------------------------
     | CKEditor Options
     |--------------------------------------------------------------------------------
     |

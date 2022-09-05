@@ -46,7 +46,7 @@ class PendingAttachment extends Model
      */
     public function persist(CKEditor5Classic $field, $model)
     {
-        Attachment::create([
+        config('ckeditor5Classic.attachment_model')::create([
             'attachable_type' => get_class($model),
             'attachable_id' => $model->getKey(),
             'attachment' => $this->attachment,

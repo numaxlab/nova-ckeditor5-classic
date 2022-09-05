@@ -1,3 +1,4 @@
+
 .ck-editor__editable_inline {
   min-height: 200px;
 }
@@ -6,3 +7,4 @@
   min-height: 200px;
   direction: rtl;
 }
+.auto-height{height:auto!important}
