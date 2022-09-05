@@ -1,5 +1,5 @@
 {
-    "name": "radwanic/nova-ckeditor5-classic",
+    "name": "fh32000/nova-ckeditor5-classic",
     "description": "A Laravel Nova CKEditor5 Classic Field.",
     "keywords": [
         "laravel",
@@ -10,8 +10,8 @@
     "license": "MIT",
 	"authors": [
         {
-            "name": "numaxlab",
-            "homepage": "https://github.com/numaxlab/nova-ckeditor5-classic"
+            "name": "fh32000",
+            "homepage": "https://github.com/fh32000/nova-ckeditor5-classic"
         }
     ],
     "require": {
